@@ -11,17 +11,17 @@ devices.stdout.on('data', function(data) {
 function createAndDisplayServer(playDevices){
   var server = http.createServer(function(request, response) {
     if (request.method.toLowerCase() == 'get') {
-        console.log("get");
+        //console.log("get");
         var url_parts = url.parse(request.url,true);
         console.log(url_parts.query);
         var selectedDevice = 0;
-        if(url_parts.query != ""){
+        if(url_parts.query != null ||  url_parts.query.length !== 0){
           selectedDevice = parseInt(url_parts.query["dev"]);
           exec("aplay -D " + playDevices[selectedDevice] + " feelgood.wav");
         }
 
         displayForm(response, playDevices, selectedDevice);
-  } 
+  }
   });
 
   server.listen(3000);
